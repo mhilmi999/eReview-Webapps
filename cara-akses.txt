@@ -1,0 +1,15 @@
+http://localhost/phpmyadmin/sql.php?db=ereview&table=users&pos=0
+
+http://localhost/ereview/index.php/manageMyTask/addNewTask
+
+http://localhost/eReview/index.php/AccountCtl/createAccount
+
+http://localhost/eReview/index.php/AccountCtl/login
+
+http://localhost/eReview/index.php
+
+https://www.mynotescode.com/form-login-dengan-session-php/
+
+https://www.mynotescode.com/login-multi-level-user-codeigniter-mysql/
+
+Jangan lupa untuk import .sql files pada localhost/phpmyadmin yaa.
