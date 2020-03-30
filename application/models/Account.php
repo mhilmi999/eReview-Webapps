@@ -1,14 +1,16 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Account extends CI_Model {
+class Account extends CI_Model
+{
 
-	function insertNewUser(){
+	function insertNewUser()
+	{
 		$q = "INSERT INTO users (nama,username,password,email,date_updated)VALUES (
-			'". $this->input->post('nama') ."',
-			'". $this->input->post('username') ."',
-			'". $this->input->post('password') ."',
-			'". $this->input->post('email') ."',
+			'" . $this->input->post('nama') . "',
+			'" . $this->input->post('username') . "',
+			'" . md5($this->input->post('password')) . "',
+			'" . $this->input->post('email') . "',
 			now()
 		)";
 		$this->db->query($q);
@@ -17,64 +19,57 @@ class Account extends CI_Model {
 		if ($peran == '1') {
 
 			$q2 = "INSERT INTO editor (id_user,date_updated)VALUES (
-			'". $id_user ."', now()
+			'" . $id_user . "', now()
 			)";
 			$this->db->query($q2);
 
 			$q3 = "INSERT INTO member (id_user,id_grup,date_updated)VALUES (
-			'". $id_user ."','". $peran ."', now()
+			'" . $id_user . "','" . $peran . "', now()
 			)";
 			$this->db->query($q3);
-
 		} else {
 
 			$q2 = "INSERT INTO reviewer (id_user,date_updated)VALUES (
-			". $id_user .", now()
+			" . $id_user . ", now()
 			)";
 			$this->db->query($q2);
 
 			$q3 = "INSERT INTO member (id_user,id_grup,date_updated)VALUES (
-			'". $id_user ."','". $peran ."', now()
+			'" . $id_user . "','" . $peran . "', now()
 			)";
 			$this->db->query($q3);
-
 		}
 		return $id_user;
 	}
-	function getIdUser(){
+	function getIdUser()
+	{
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
-		$q = "SELECT * FROM users WHERE username='$username' and password='$password'";
+		$passwordx = md5($password);
+		$q = "SELECT * FROM users WHERE username='$username' and password='$passwordx'";
 		//$q = "SELECT * FROM users WHERE username='". $this->input->post('username') ."',"."password='". $this->input->post('password') ."'";
 		$res = $this->db->query($q);
 		$users = $res->result_array();
 
-		if (count($users)>0) {
+		if (count($users) > 0) {
 			return $users[0]['id_user'];
 		}
 		return -1;
 	}
-	/*
-	function getPeranUser(){
-		$q = "SELECT * FROM member WHERE id_grup and id_user";
-		//$q = "SELECT * FROM users WHERE username='". $this->input->post('username') ."',"."password='". $this->input->post('password') ."'";
-		$res = $this->db->query($q);
-		$member = $res->result_array();
 
-		if (count($member)>0) {
-			return $member[0]['id_grup'];
-		}
-		return -1;
-	}
-	*/
-	function getPeranUser($id_user = -1 ){
-		
+	function getPeranUser($id_user = -1)
+	{
+
 		$q = "SELECT * FROM member WHERE id_user ='$id_user'";
 		$res = $this->db->query($q);
 		//$peran	=	$this->input->post('peran');
 		$peran = $res->result_array();
 		return $peran[0]['id_grup'];
 	}
-	
+
+	function logout()
+	{
+		$this->session->sess_destroy();
+		redirect('AccountCtl/login');
+	}
 }
-?>
