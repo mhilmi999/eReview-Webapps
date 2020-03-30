@@ -13,3 +13,9 @@ https://www.mynotescode.com/form-login-dengan-session-php/
 https://www.mynotescode.com/login-multi-level-user-codeigniter-mysql/
 
 Jangan lupa untuk import .sql files pada localhost/phpmyadmin yaa.
+
+**PENTING** 30/03/2020
+1. Update yang baru sudah menggunakan password berupa enkripsi, sehingga password tidak lagi terlihat pada phpmyadmin yang mana
+semua password pada ereview.sql ini yaitu 12345.
+2. Penambahan fitur login session
+3. Penambahan fitur logout
