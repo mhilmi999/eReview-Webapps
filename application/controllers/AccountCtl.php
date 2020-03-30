@@ -66,7 +66,7 @@ class AccountCtl extends CI_Controller {
 		}
 
 		$id_user = $this->Account->insertNewUser();
-		redirect('AccountCtl/login/'. $id_user);
+		redirect('AccountCtl/login);
 	}
 	public function checkingLogin(){
 
@@ -88,6 +88,7 @@ class AccountCtl extends CI_Controller {
 		}
 
 		$id_user = $this->Account->getIdUser();
+		$username = $this->input->post('username');
 		//$id_grup = $this->Account->getPeranUser();
 		
 
@@ -96,6 +97,11 @@ class AccountCtl extends CI_Controller {
 		} 
 		else {
 			$peran = $this->Account->getPeranUser($id_user);
+			$data_session = array(
+				'nama' => $username
+
+			);
+			$this->session->set_userdata($data_session);
 			
 			if ($peran == '0') {
 				// MATI
@@ -112,5 +118,11 @@ class AccountCtl extends CI_Controller {
 			}
 			
 		}		
+	}
+	
+	public function logout()
+	{
+		$this->session->sess_destroy();
+		redirect('AccountCtl/login');
 	}
 }
