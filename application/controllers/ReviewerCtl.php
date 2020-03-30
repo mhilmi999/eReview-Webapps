@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class ReviewerCtl extends CI_Controller {
+class ReviewerCtl extends CI_Controller
+{
 
 	/**
 	 * Index Page for this controller.
@@ -20,6 +21,11 @@ class ReviewerCtl extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		$data['username'] = $this->db->get_where('users', ['email' =>
+		$this->session->userdata('email')])->row_array();
+		echo 'Anda telah masuk sebagai Reviewer' . $data['username'];
+		echo '         ';
+		echo anchor('AccountCtl/logout', 'logout');
+		$this->load->view('reviewer/BerandaReviewer');
 	}
 }
